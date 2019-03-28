@@ -104,6 +104,7 @@ def taskDescription(request, teamId, taskId):
 	args['task'] = task
 	args['user'] = user
 	args['comments'] = comments
+	
 	return render(request, 'taskdescription.html', args)
 
 
