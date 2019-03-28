@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+{% block title %}
+<title> Tasks </title>
+{% endblock %}
+
+{% block nav %}
+<a href="{% url 'logout'%}"><i class="fa fa-fw fa-user"></i>Logout</a>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+    {% if msg %}
+    <h1> {{msg}} </h5>
+    {% endif %}
+
+
+	{% if tasks %}
+    <ul class="list">
+        {% for task in tasks %}
+
+            <li><a style="font-size:20px; padding:20px;" href="{% url 'tasks'%}{{task.team.pk}}/{{task.pk}}"> {{ task.title }} </a> </li>
+        {% endfor %}
+    
+    </ul>
+    {% endif %}
+{% endblock %}
+

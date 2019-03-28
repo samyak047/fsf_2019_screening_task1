@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
 
+
+class CommentForm(forms.Form):
+	body = forms.CharField(label = 'Comment')
+	
 class RegisterForm(forms.Form):
 	firstname = forms.CharField(label = 'First Name')
 	lastname = forms.CharField(label = 'Last Name')

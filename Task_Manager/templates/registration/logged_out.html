@@ -1,0 +1,8 @@
+{% extends "base_generic.html" %}
+{% block nav %}
+<a href="{% url 'login'%}"><i class="fa fa-fw fa-user"></i>Login</a>
+{% endblock %}
+{% block content %}
+  <p>Logged out!</p>
+  <a href="{% url 'login'%}">Click here to login again.</a>
+{% endblock %}

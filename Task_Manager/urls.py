@@ -8,6 +8,8 @@ urlpatterns = [
 	path('teams/', views.teams, name='teams'),
 	path('accounts/register/', views.register, name='register'),
 	path('createteam/', views.createTeam, name='createTeam'),
-	path('teams/', views.teams, name='teams')
+	path('teams/', views.teams, name='teams'),
+	path('tasks/<teamId>', views.tasks, name='tasks'),
+	path('tasks/<teamId>/<taskId>', views.taskDescription, name='description'),
 
 ]

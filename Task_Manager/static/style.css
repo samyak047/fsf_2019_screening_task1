@@ -1,0 +1,179 @@
+/*
+	Site: Indian Impact
+	Author: Jenny Fan
+	Author URI: http://jennyfan.com
+	
+*/
+
+html, body {
+	margin: 0;
+	height: 100%;
+	background-color: #000;
+}
+section {
+	display: block;
+	min-height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+@font-face {
+    font-family: 'Espinosa Nova';
+    src: url('fonts/espinosanova-regular-webfont.eot');
+    src: url('fonts/espinosanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/espinosanova-regular-webfont.woff') format('woff'),
+         url('fonts/espinosanova-regular-webfont.ttf') format('truetype'),
+         url('fonts/espinosanova-regular-webfont.svg#espinosa_novaregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'bebasregular';
+    src: url('fonts/BEBAS-webfont.eot');
+    src: url('fonts/BEBAS-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/BEBAS-webfont.woff') format('woff'),
+         url('fonts/BEBAS-webfont.ttf') format('truetype'),
+         url('fonts/BEBAS-webfont.svg#bebasregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+#hero {
+	z-index: 1;
+	text-align: center;
+}
+#main {
+	background-image: url('../img/main.jpg');
+	background-position: top right;
+	background-repeat: no-repeat;
+	-webkit-background-size: 100%; 
+    -moz-background-size: 100%; 
+    -o-background-size: 100%; 
+    background-size: 100%; 
+    -webkit-background-size: cover; 
+    -moz-background-size: cover; 
+    -o-background-size: cover; 
+    background-size: cover; 
+	z-index: 1;
+	text-align: center;
+}
+#maincontent {
+	padding: 3% 20px;
+	margin: 0 auto;
+}
+
+
+p {
+	font-family: 'Espinosa Nova', Georgia, sans-serif;
+	font-weight: 100;
+	font-size: 130%;
+	letter-spacing: 1px;
+	color: #fff;
+	line-height: 1.2em;
+}
+p.big {
+	font-variant: small-caps;
+	line-height: 1em;
+	margin: 25px 0;
+}
+p.biggest {
+	margin: 20px 0 0 0;
+	font-variant: small-caps;
+	color: #ff9731;
+	font-weight: 500;
+	line-height: 1.3em;
+}
+
+span.bold {
+	font-variant: small-caps;
+	font-weight: 500;
+	font-size: 200%;
+	color: #ff9731;
+}
+/* Narrow Page (tablets, etc) */ 
+@media all and (max-width: 767px) {
+	#maincontent {
+		width: 90%;
+	}
+	p, span.bold {
+		font-size: 150%;
+	}
+	p.big {
+		font-size: 150%;
+	}
+	p.biggest {
+		font-size: 250%;
+	}
+}
+/* Wide Page */
+@media all and (min-width: 768px) {
+	#maincontent {
+		max-width: 60%;
+	}
+	p.big {
+		font-size: 200%;
+	}
+	p.biggest {
+		font-size: 300%;
+	}
+}
+
+
+a:hover, img:hover {
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -ms-transition: all .3s;
+}
+
+
+.logo {
+	margin: 20px auto 0;
+	z-index: 4;
+	opacity: 1;
+	width: 200px;
+}
+.logo:hover {
+	opacity: 1.0;
+}
+
+footer {
+	margin-top: 15%;
+	text-align: center;
+	z-index: 3;
+}
+footer p {
+	display: inline;
+	line-height: 1.5em;
+	font-family: 'Espinosa Nova', Georgia, sans-serif;
+	font-size: 150%;
+	font-weight: 200;
+	padding: 5px 10px;
+	background-color: #000;
+	color: #fff;
+}
+footer a, nav a {
+	position: relative;
+	display: inline-block;
+	padding: 10px;
+	margin: 5px 10px;
+	outline: none;
+	color: #fff;
+	background-color: #ff9731;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-family: 'Bebas', 'Arial Narrow', 'Arial', sans-serif;
+	font-weight: 400;
+	font-size: 150%;
+}
+
+footer a:hover, footer a:focus,
+nav a:hover, nav a:focus {
+	outline: none;
+	text-decoration: none;
+	color: #fff;
+	background-color: #c94200;
+}

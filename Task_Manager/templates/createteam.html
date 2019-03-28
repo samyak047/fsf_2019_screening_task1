@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+
+
+{% block title %}
+<title>Register</title>
+{% endblock %}
+
+
+
+
+
+{% block nav %}
+<a href="{% url 'login'%}"><i class="fa fa-fw fa-user"></i>Login</a>
+{% endblock %}
+
+	{% block content %}
+	<div >
+	<form method="POST" id="reg_form">
+		{% csrf_token %}
+		{{form}}
+	<button type="submit" class="main-btn submit" id="sub">Submit</button>
+	</form>
+</div>
+	{% endblock %}
+
+</body>
+</html>

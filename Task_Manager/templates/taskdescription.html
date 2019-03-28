@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+{% block title %}
+<title> Tasks </title>
+{% endblock %}
+
+{% block nav %}
+<a href="{% url 'logout'%}"><i class="fa fa-fw fa-user"></i>Logout</a>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+    {% if msg %}
+    <h5> {{msg}} </h5>
+    {% endif %}
+
+
+	{% if task %}
+        <h2>{{task.title}}</h2>
+        <h2>{{task.status}}</h2>
+        <p>{{task.description}}</p>
+    {% endif %}
+    {% if comments %}
+    <ul>
+        {% for comment in comments %}
+        <li> {{comment.body}}   {{comment.author.username}}</li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+
+    {% if form %}
+    <div >
+    <form method="POST" id="reg_form">
+        {% csrf_token %}
+        {{form}}
+    <button type="submit" class="main-btn submit" id="sub">Comment</button>
+    </form>
+    </div>
+    {% endif %}
+    
+{% endblock %}
+
