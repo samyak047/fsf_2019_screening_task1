@@ -1,28 +1,17 @@
 {% extends "base_generic.html" %}
 
+{% block title %}Create Team{% endblock %}
 
+{% block content %}
 
-{% block title %}
-<title>Register</title>
+<form method="post" style="width:60%;margin:auto;text-align: center;">
+{% csrf_token %}
+<table cellpadding="0">
+{{form.as_table}}
+</table>
+
+<button type="submit" class="main-btn submit" id="sub" style="width:100px;padding:6px;border:1px solid black;margin-top:10px;">Create Team</button>
+
+</form>
+
 {% endblock %}
-
-
-
-
-
-{% block nav %}
-<a href="{% url 'login'%}"><i class="fa fa-fw fa-user"></i>Login</a>
-{% endblock %}
-
-	{% block content %}
-	<div >
-	<form method="POST" id="reg_form">
-		{% csrf_token %}
-		{{form}}
-	<button type="submit" class="main-btn submit" id="sub">Submit</button>
-	</form>
-</div>
-	{% endblock %}
-
-</body>
-</html>

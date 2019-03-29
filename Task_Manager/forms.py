@@ -23,13 +23,13 @@ class RegisterForm(forms.Form):
 			raise forms.ValidationError('Username already Exists')
 		#if len(p1) < 8:
 		#	raise forms.ValidationError('Password should be minimum 8 characters long.')
-		if p1 != p2:
+		elif p1 != p2:
 			raise forms.ValidationError('Both Password fields should be same.')
 		
 
 class CreateTeamForm(forms.Form):
 	teamName = forms.CharField(label = 'Team Name')
-	members = forms.CharField(label = 'Space separated username or email id of Members')
+	members = forms.CharField(label = 'Space separated usernames of Members')
 
 	def clean(self):
 		cleaned_data = super().clean()

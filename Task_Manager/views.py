@@ -5,8 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, CreateTeamForm, CommentForm
 from .models import Team, Comment, Task
 
-def index(request):
-	return HttpResponse("Welcome")
+
+def home(request):
+	return redirect('login')
+
 
 def register(request):
 	if(request.method == 'POST'):
@@ -22,7 +24,7 @@ def register(request):
 			user.last_name = lastname
 			user.save()
 			print('Registration Complete')
-			return redirect('http://127.0.0.1:8000/accounts/login/')
+			return redirect('home')
 		else:
 			return render(request, 'register.html', {'form' : form})
 	else:	
@@ -54,6 +56,7 @@ def createTeam(request):
 @login_required
 def teams(request):
 	user = request.user
+	print(user.username)
 	queryset = user.team_set.all()
 	print(queryset)
 	for team in queryset:
@@ -104,10 +107,8 @@ def taskDescription(request, teamId, taskId):
 	args['task'] = task
 	args['user'] = user
 	args['comments'] = comments
-	
+
 	return render(request, 'taskdescription.html', args)
-
-
 
 
 

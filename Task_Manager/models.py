@@ -8,6 +8,8 @@ class Team(models.Model):
 	createdAt = models.DateTimeField(auto_now_add=True)
 	def __str__(self):
 		return str(self.name)
+	def membersCount(self):
+		return len(self.members.objects.all())
 
 	class Meta:
 		ordering = ['createdAt']

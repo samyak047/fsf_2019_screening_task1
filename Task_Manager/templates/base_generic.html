@@ -1,49 +1,106 @@
-{% load static %}
-
-
-
+{% load static %} {% spaceless %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-	
-  <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <title>{%block title%}{%endblock%}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Search engine optimisation -->
+    <meta name="author" content="samyak047">
+    <!-- UI Customization -->
+    <!-- Browser tab theme color for Chrome on Android -->
+    <meta name="theme-color" content="#ff7043">
+    <link href="{% static 'images/favicon.png' %}" rel="shortcut icon">
+    <!-- Browser tab theme color for Chrome on Android IOS -->
+    <link href="{% static 'images/favicon.png' %}" rel="apple-touch-icon">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ff7043">
+    <meta name="apple-mobile-web-app-title" content="Speaking-Tutorials">
+    <!-- Browser tab theme color for Chrome on Windows -->
+    <meta name="msapplication-TileImage" content="{% static 'images/favicon.png' %}">
+    <meta name="msapplication-TileColor" content="#ff7043">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-<style>
-{% block css %}
-{% endblock %}
-</style>
 
-	{% block title %}
-	<title>Title</title>
-	{% endblock %}
-	<!-- Google font -->
-	{% block link %}
-	{% endblock %}
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
 </head>
 
 <body>
-
-
-<div class="navbar">
-		{% block nav %}
-  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
-  <a href="#"><i class="fa fa-fw fa-search"></i> Search</a> 
-  <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
-  <a href="#"><i class="fa fa-fw fa-user"></i> Login</a>
-  		{% endblock %}
-
-</div>
-
-	{% block content %}	
-
-	{% endblock %}
+    <nav class="{{ community.site_theme }} lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">Task Manager</a>
+        {% if request.user.is_authenticated %}
+        <ul class="right hide-on-med-and-down">
+            <li>
+                <a href="{% url 'teams' %}">My Teams</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">My Tasks</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">Logout</a>
+            </li>
+        </ul>
+        <ul id="nav-mobile" class="sidenav">
+            <li>
+                <a href="{% url 'teams' %}">My Teams</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">My Tasks</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">Logout</a>
+            </li>
+        {% else %}
+        <ul class="right hide-on-med-and-down">
+            <li>
+                <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">Login</a>
+            </li>
+        </ul>
+        <ul id="nav-mobile" class="sidenav">
+            <li>
+                <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">Login</a>
+            </li>
+        </ul>
+        {% endif %}
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger">
+            <i class="fas fa-bars"></i>
+        </a>
+    </div>
+    </nav>
+    {% block content %} {% endblock %}
+    <!-- Page Scripts -->
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
+    <!-- Fontawesome JavaScript -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+        crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+        crossorigin="anonymous"></script>
+    <script>
+        var elem = document.querySelector('.sidenav');
+        var instance = M.Sidenav.init(elem);
+    </script>
 
 </body>
 
 </html>
+{% endspaceless %}
