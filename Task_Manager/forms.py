@@ -2,9 +2,6 @@ from django import forms
 from django.contrib.auth.models import User
 from . models import Task
 
-class CommentForm(forms.Form):
-	body = forms.CharField(label = 'Comment')
-	
 class RegisterForm(forms.Form):
 	firstname = forms.CharField(label = 'First Name')
 	lastname = forms.CharField(label = 'Last Name')
@@ -25,7 +22,7 @@ class RegisterForm(forms.Form):
 			raise forms.ValidationError('Password should be minimum 8 characters long.')
 		elif p1 != p2:
 			raise forms.ValidationError('Both Password fields should be same.')
-		
+
 
 class CreateTeamForm(forms.Form):
 	teamName = forms.CharField(label = 'Team Name')
@@ -40,7 +37,7 @@ class CreateTeamForm(forms.Form):
 			if len(User.objects.filter(username = member)) == 0:
 				raise forms.ValidationError('No user with username: '+member)
 	
-class AddMember(forms.Form):
+class AddMemberForm(forms.Form):
 	member = forms.CharField(label = 'Username')
 
 	def clean(self):
@@ -60,10 +57,9 @@ class CreateTaskForm(forms.Form):
 	title = forms.CharField(label = 'Title')
 	description = forms.CharField(label = 'Description')
 	status = forms.CharField(label = 'Status')
-	dueDate = forms.DateField(label='Due Date')
+	dueDate = forms.DateField(label='Due Date (YYYY-MM-DD)')
 	members = forms.CharField(label = 'Space separated usernames of Assignee')
 	
-
 	def clean(self):
 		cleaned_data = super().clean()
 		members = cleaned_data.get("members")
@@ -71,3 +67,8 @@ class CreateTaskForm(forms.Form):
 		for member in members:
 			if len(User.objects.filter(username = member)) == 0:
 				raise forms.ValidationError('No user with username: '+member)
+
+
+class CommentForm(forms.Form):
+	body = forms.CharField(label = 'Comment')
+	

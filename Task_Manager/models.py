@@ -20,7 +20,7 @@ class Task(models.Model):
 	status = models.CharField(max_length=100)
 	
 	createdBy = models.ForeignKey(User, null=False, related_name="task_created_by", on_delete=models.CASCADE)
-	assignedTo = models.ManyToManyField(User, null=False, default=createdBy, related_name="task_assigned_to")
+	assignedTo = models.ManyToManyField(User, default=createdBy, related_name="task_assigned_to")
 	
 	createdAt = models.DateTimeField(auto_now_add=True)
 	dueDate = models.DateField(blank=True, null=True)

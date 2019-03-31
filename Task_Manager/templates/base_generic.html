@@ -38,17 +38,15 @@
 </head>
 
 <body>
-    <nav class="{{ community.site_theme }} lighten-1" role="navigation">
+    <nav class=" lighten-1" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">Task Manager</a>
+        <a id="logo-container" href="" class="brand-logo">Task Manager</a>
         {% if request.user.is_authenticated %}
         <ul class="right hide-on-med-and-down">
             <li>
                 <a href="{% url 'teams' %}">My Teams</a>
             </li>
-            <li>
-                <a href="{% url 'login' %}">My Tasks</a>
-            </li>
+
             <li>
                 <a href="{% url 'login' %}">Logout</a>
             </li>
@@ -57,9 +55,7 @@
             <li>
                 <a href="{% url 'teams' %}">My Teams</a>
             </li>
-            <li>
-                <a href="{% url 'login' %}">My Tasks</a>
-            </li>
+
             <li>
                 <a href="{% url 'login' %}">Logout</a>
             </li>

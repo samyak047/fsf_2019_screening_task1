@@ -2,14 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, CreateTeamForm, CommentForm,  AddMember, EditTaskForm, CreateTaskForm
+from .forms import RegisterForm, CreateTeamForm, CommentForm,  AddMemberForm, EditTaskForm, CreateTaskForm
 from .models import Team, Comment, Task
 
-
+# View Function for home
 def home(request):
 	return redirect('login')
 
-
+# View Function to register
 def register(request):
 	if(request.method == 'POST'):
 		form = RegisterForm(request.POST)
@@ -23,15 +23,15 @@ def register(request):
 			user.first_name = firstname
 			user.last_name = lastname
 			user.save()
-			print('Registration Complete')
-			return render(request, 'registered.html')
+			return render(request, 'registeredUser.html')
 		else:
-			return render(request, 'register.html', {'form' : form})
+			return render(request, 'registerUser.html', {'form' : form})
 	else:	
 		form = RegisterForm()
 		args = {'form': form}
-		return render(request, 'register.html', args)
+		return render(request, 'registerUser.html', args)
 
+# View Function for Create Team
 @login_required
 def createTeam(request):
 	if(request.method == 'POST'):
@@ -45,25 +45,25 @@ def createTeam(request):
 			for member in members:
 				user = User.objects.get(username = member)
 				team.members.add(user)
-			print('Team Created')
 
 			return redirect('teams')
 	else:
 		form = CreateTeamForm()
 	args = {'form' : form}
-	return render(request, 'createteam.html', args)
+	return render(request, 'createTeam.html', args)
 
+# View Function for list teams
 @login_required
 def teams(request):
 	user = request.user
 	queryset = user.team_set.all()
-	queryset1 = Team.objects.filter(creator = user)   #team created by user
-	print(queryset1)
-	queryset2 = queryset.exclude(creator = user)  #other teams
+	queryset1 = Team.objects.filter(creator = user)   #teams created by user
+	queryset2 = queryset.exclude(creator = user)  	#other teams
 
 	args = {'teams1' : queryset1, 'teams2' : queryset2, 'user' : user}
-	return render(request, 'teams.html', args)
+	return render(request, 'teamsList.html', args)
 
+# View Function for list tasks
 @login_required
 def tasks(request, teamId):
 	user = request.user
@@ -76,12 +76,11 @@ def tasks(request, teamId):
 	tasks2 = tasks2.exclude(id__in = tasks1)	
 	tasks3 = team.task_set.exclude(id__in = tasks1) #all remaining tasks of team
 	tasks3 = tasks3.exclude(id__in = tasks2)
-	for task in tasks2:
-		print(task)
 
 	args = {'tasks1': tasks1, 'tasks2': tasks2, 'tasks3': tasks3, 'team': team, 'user' : user}
-	return render(request, 'tasks.html', args)
+	return render(request, 'tasksList.html', args)
 
+# View Function for task details
 @login_required
 def taskDescription(request, teamId, taskId):
 	user = request.user
@@ -93,8 +92,6 @@ def taskDescription(request, teamId, taskId):
 		raise Http404("Unauthorized Access")
 	task = get_object_or_404(Task, pk = taskId)
 	comments = task.comment_set.all()
-	print(comments)
-
 	if task.team != team:
 		raise Http404("Team Mismatch")
 	
@@ -113,19 +110,20 @@ def taskDescription(request, teamId, taskId):
 	args['team'] = team
 	args['comments'] = comments
 
-	return render(request, 'taskdescription.html', args)
+	return render(request, 'viewTask.html', args)
 
+# View Function for edit team
 @login_required
 def editTeam(request, teamId):
 	user = request.user
 	team = get_object_or_404(Team, pk = teamId)
 	if request.user != team.creator:
 		raise Http404("Unauthorized Access")
-	args = {'user': user, 'team':team, 'form':AddMember()}
+	args = {'user': user, 'team':team, 'form':AddMemberForm()}
 	
 	if request.method == 'POST':
 		if 'member' in request.POST:
-			form = AddMember(request.POST)
+			form = AddMemberForm(request.POST)
 			if form.is_valid():
 				user = User.objects.get(username= form.cleaned_data['member'])
 				if user in team.members.all() or team.creator == user:
@@ -141,17 +139,16 @@ def editTeam(request, teamId):
 		
 		else:
 			member = list(request.POST)[1]
-			print(member)
 			user = User.objects.get(username = member)
 			team.members.remove(user)
-			print('ok')
-	
+			
 	members = team.members.all()
 	if len(members) == 0:
 		args['msg'] = 'No members in team.'
 	args['members'] = members
 	return render(request, 'editTeam.html' ,args)
 
+# View Function for team details
 @login_required
 def viewTeam(request, teamId):
 	user = request.user
@@ -163,7 +160,7 @@ def viewTeam(request, teamId):
 	args = {'team': team, 'user': user, 'members':members}
 	return render(request, 'viewTeam.html' ,args)
 
-
+# View Function for edit task
 @login_required
 def editTask(request, teamId, taskId):
 	team = get_object_or_404(Team, pk=teamId)
@@ -172,19 +169,19 @@ def editTask(request, teamId, taskId):
 	if task.team != team or task.createdBy != user:
 		raise Http404("Unauthorized Access")
 	form = EditTaskForm(instance= task)
-	form2 = AddMember()
+	form2 = AddMemberForm()
 	if request.method == "POST":
-		print(request.POST)
 		if 'member' in request.POST:
-			form2 = AddMember(request.POST)
+			form2 = AddMemberForm(request.POST)
 			if form2.is_valid():
-				user = User.objects.get(username= form2.cleaned_data['member'])
-				if user in task.assignedTo.all():
-					msg = str(user.username) +' already assigned.'
+				assignee = User.objects.get(username= form2.cleaned_data['member'])
+				if assignee in task.assignedTo.all():
+					msg = str(assignee.username) +' already assigned.'
+				elif assignee not in team.members.all():
+					msg = str(assignee.username) + ' not in team.'
 				else:
-					task.assignedTo.add(user)
-					msg = str(user.username) +' assigned to task to task'	
-
+					task.assignedTo.add(assignee)
+					msg = str(assignee.username) +' assigned to task.'	
 			else:
 				members = team.members.all()
 
@@ -199,19 +196,18 @@ def editTask(request, teamId, taskId):
 			form = EditTaskForm(instance=task)
 		else:
 			member = list(request.POST)[1]
-			print(member)
 			assignee = User.objects.get(username = member)
 			task.assignedTo.remove(assignee)
-			print('ok')
+			
 	else:
 		form = EditTaskForm(instance=task)
-		form2 = AddMember()
+		form2 = AddMemberForm()
 	assignedTo = task.assignedTo.all()
-	args = {'team': team, 'user': user, 'form': form, 'form2': form2, 'assignedTo': assignedTo}
+	args = {'team': team, 'user': user, 'form': form, 'form2': form2, 'assignedTo': assignedTo, 'task':task}
 	return render(request, 'editTask.html', args)
 
 
-
+# View Function for create task
 @login_required
 def createTask(request, teamId):
 
@@ -235,7 +231,6 @@ def createTask(request, teamId):
 				assignee = User.objects.get(username = member)
 				if assignee in team.members.all():
 					task.assignedTo.add(assignee)
-			print('Task Created')
 			return redirect('tasks', team.pk)
 	else:
 		form = CreateTaskForm()

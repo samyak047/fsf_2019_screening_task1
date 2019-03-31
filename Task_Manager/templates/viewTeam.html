@@ -26,14 +26,14 @@
         <tbody>
             <tr>
                 <td>{{ team.creator.username }}</td>
-                <td>{{ team.creator.firstname}} {{team.creator.lastname}} </td>
+                <td>{{ team.creator.first_name}} {{team.creator.last_name}} </td>
                 <td>Creator</td>
                 
             </tr>
             {% for member in members %}
             <tr>
                 <td>{{ member.username }}</td>
-                <td>{{ member.firstname}} {{member.lastname}} </td>
+                <td>{{ member.first_name}} {{member.last_name}} </td>
                 <td>Member</td>
             </tr>
             {% endfor %}
