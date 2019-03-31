@@ -25,10 +25,11 @@
                 <td>{{ team.createdAt }} by You</td>
                 
                 <td>
-                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/team/edit/{{team.pk}}">
+                    <a class="btn waves-effect waves-light blue" href="{% url 'editTeam' team.pk %}">
                         View/Edit Team</a>
-                </td>                <td>
-                    <a class="btn waves-effect waves-light blue" href="{% url 'tasks'%}{{team.pk}}">
+                </td>
+                <td>
+                    <a class="btn waves-effect waves-light blue" href="{% url 'tasks' team.pk %}">
                         Show Tasks</a>
                 </td>
             </tr>
@@ -51,11 +52,11 @@
                     <td>{{ team.name }}</td>
                     <td>{{ team.createdAt }} by {{ team.creator.username }}</td>
                     <td>
-                        <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/team/view/{{team.pk}}">
+                        <a class="btn waves-effect waves-light blue" href="{% url 'viewTeam' team.pk %}">
                             View Team</a>
                     </td>
                     <td>
-                        <a class="btn waves-effect waves-light blue" href="{% url 'tasks' %}{{team.pk}}">
+                        <a class="btn waves-effect waves-light blue" href="{% url 'tasks' team.pk %}">
                             Show Tasks</a>
                     </td>
 

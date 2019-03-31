@@ -9,7 +9,7 @@
     <h1 class='section_header'>{{ team.name }} | Tasks</h1>
     <a class="btn waves-effect waves-light blue" href="{% url 'teams' %}">
         <i class="fas fa-chevron-left"></i> Back</a>
-    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/create/{{team.pk}}">Create Task</a>
+    <a class="btn waves-effect waves-light blue" href="{% url 'createTask' team.pk %}">Create Task</a>
 
     {% if not tasks1 and not tasks2 and not tasks3 %}
     <div id='message_section'>
@@ -36,11 +36,11 @@
                 <td>{{ task.dueDate }}</td>
                 <td>{{ task.status }}</td>
                 <td>
-                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}}/edit ">Edit</a>
+                    <a class="btn waves-effect waves-light blue" href="{% url 'editTask' team.pk task.pk %}">Edit</a>
                 </td>
                 
                 <td>
-                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}} ">View</a>
+                    <a class="btn waves-effect waves-light blue" href="{% url 'description' team.pk task.pk %}">View</a>
                 </td>
 
             </tr>
@@ -68,7 +68,7 @@
                 <td>{{ task.dueDate }}</td>
                 <td>{{ task.status }}</td>
                 <td>
-                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}} ">View</a>
+                    <a class="btn waves-effect waves-light blue" href="{% url 'description' team.pk task.pk %}">View</a>
                 </td>
 
             </tr>
@@ -96,7 +96,7 @@
                 <td>{{ task.dueDate }}</td>
                 <td>{{ task.status }}</td>
                 <td>
-                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}} ">View</a>
+                    <a class="btn waves-effect waves-light blue" href="{% url 'description' team.pk task.pk %}">View</a>
                 </td>
 
             </tr>

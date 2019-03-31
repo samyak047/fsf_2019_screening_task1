@@ -6,7 +6,7 @@
 {% if team %}
 <h3 class='section_header'>Create task for {{team.name}}</h3>
 {% endif %}
- <a class="btn waves-effect waves-light blue" href="{% url 'tasks' %}{{team.pk}}">
+ <a class="btn waves-effect waves-light blue" href="{% url 'tasks' team.pk %}">
         <i class="fas fa-chevron-left"></i> Back</a>
 
 <form method="post" style="width:60%;margin:auto;text-align: center;">

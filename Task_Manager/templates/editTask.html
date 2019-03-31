@@ -6,7 +6,7 @@
 
 
 <div class="container" style="margin-bottom: 60px;">
-    <a class="btn waves-effect waves-light blue" href="{% url 'tasks'%}{{team.pk}}">
+    <a class="btn waves-effect waves-light blue" href="{% url 'tasks' team.pk %}">
         <i class="fas fa-chevron-left"></i> Back</a>
     
     <h1 class='section_header'>{{team.name}} | {{task.title}}</h1>
@@ -75,6 +75,6 @@
 
 </form>
 
-    <a class="btn waves-effect waves-light blue" href="{% url 'tasks'%}{{team.pk}}" style="text-align: : center;"> Done </a>
+    <a class="btn waves-effect waves-light blue" href="{% url 'tasks' team.pk %}" style="text-align: : center;"> Done </a>
 </div>
 {% endblock %}
