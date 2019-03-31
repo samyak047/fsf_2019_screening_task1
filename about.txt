@@ -1,0 +1,27 @@
+﻿Task Manager Django App, that does the following:
+
+1. Authenticate the user
+
+  	1.1 Allow new users to sign up
+
+        1.2 Allow existing users to sign in
+
+2. Allow only an authenticated user to create Task
+
+3. Allow creation of ‘Teams’
+
+   	3.1 Team creator should be able to add other Users to their Teams
+
+4. Only the Task Creator can edit Tasks that have been created by himself
+
+        4.1 Other users from the same team can only view and comment on Tasks that were created by another User
+
+5. A User from another Team cannot view/edit/assign/comment on a Task of a different Team Member.
+
+6. Creator of Task should be able to assign the Task to one or more Users from his own Team
+
+7. In case Task Creator does not belong to a team, he himself will always be assigned to his own tasks.
+
+8. Each Task should have a comments section where all users in one Team can comment on the Task
+
+9. An authenticated User can comment on his own tasks (assigned to or created by him) as well as other Tasks of his Team members.

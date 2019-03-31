@@ -52,6 +52,38 @@ def createTeam(request):
 	args = {'form' : form}
 	return render(request, 'createTeam.html', args)
 
+
+
+# View Function for create task
+@login_required
+def createTask(request, teamId):
+
+	team = get_object_or_404(Team, pk=teamId)
+	user = request.user
+	if team.creator != user and user not in team.members.all():
+		raise Http404("Unauthorized Access")
+
+	if(request.method == 'POST'):
+		form = CreateTaskForm(request.POST)
+		if form.is_valid():
+			title = form.cleaned_data['title']
+			status = form.cleaned_data['status']
+			description = form.cleaned_data['description']
+			dueDate = form.cleaned_data['dueDate']
+			members = form.cleaned_data['members']
+			members = members.split()
+			task = Task.objects.create(title= title, description = description, status= status, createdBy= user, dueDate= dueDate, team= team)
+			task.assignedTo.add(user)
+			for member in members:
+				assignee = User.objects.get(username = member)
+				if assignee in team.members.all():
+					task.assignedTo.add(assignee)
+			return redirect('tasks', team.pk)
+	else:
+		form = CreateTaskForm()
+	args = {'team': team, 'form' : form}
+	return render(request, 'createTask.html', args)
+
 # View Function for list teams
 @login_required
 def teams(request):
@@ -206,34 +238,4 @@ def editTask(request, teamId, taskId):
 	args = {'team': team, 'user': user, 'form': form, 'form2': form2, 'assignedTo': assignedTo, 'task':task}
 	return render(request, 'editTask.html', args)
 
-
-# View Function for create task
-@login_required
-def createTask(request, teamId):
-
-	team = get_object_or_404(Team, pk=teamId)
-	user = request.user
-	if team.creator != user and user not in team.members.all():
-		raise Http404("Unauthorized Access")
-
-	if(request.method == 'POST'):
-		form = CreateTaskForm(request.POST)
-		if form.is_valid():
-			title = form.cleaned_data['title']
-			status = form.cleaned_data['status']
-			description = form.cleaned_data['description']
-			dueDate = form.cleaned_data['dueDate']
-			members = form.cleaned_data['members']
-			members = members.split()
-			task = Task.objects.create(title= title, description = description, status= status, createdBy= user, dueDate= dueDate, team= team)
-			task.assignedTo.add(user)
-			for member in members:
-				assignee = User.objects.get(username = member)
-				if assignee in team.members.all():
-					task.assignedTo.add(assignee)
-			return redirect('tasks', team.pk)
-	else:
-		form = CreateTaskForm()
-	args = {'team': team, 'form' : form}
-	return render(request, 'createTask.html', args)
 
