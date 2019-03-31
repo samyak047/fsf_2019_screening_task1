@@ -11,15 +11,20 @@
   {% endif %}
 {% endif %}
 
-<h1 style="text-align: center;"> Task Manager </h1> 
 
+<h1 style="text-align: center;"> Task Manager </h1> 
+{% if user.is_authenticated %}
+<div id='message_section' class="container" style="margin-bottom: 60px;">
+        Already logged as {{request.user}}.
+</div>
+{% else %}
 <form method="post" action="{% url 'login' %}" style="width:410px;margin:auto;text-align: center;">
 {% csrf_token %}
 <table cellpadding="0">
 {{form.as_table}}
 </table>
 
-<input type="submit" class="main-btn submit" id="sub" value="login" style="width:100px;padding:6px;border:1px solid black;margin-top:10px;" />
+<input type="submit" class="main-btn submit" id="sub" value="login" style="margin-bottom: 60px;width:100px;padding:6px;border:1px solid black;margin-top:10px;" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
@@ -27,6 +32,6 @@
 <p style="text-align: center"><a href="{% url 'password_reset' %}">Lost password?</a></p>
 <br>
 <p style="text-align: center"><a href="{% url 'registerUser' %}">Don't have account?</a></p>
-
+{% endif %}
 
 {% endblock %}

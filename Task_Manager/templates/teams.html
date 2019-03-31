@@ -1,35 +1,33 @@
 {% extends "base_generic.html" %}
-{% block title %}
-{{user.username}} | Teams 
-{% endblock %}
-
-{% block nav %}
-<a href="{% url 'logout'%}"><i class="fa fa-fw fa-user"></i>Logout</a>
-{% endblock %}
-
+{% block title %} {{user.username}} | Teams {% endblock %}
 
 
 
 {% block content %}
-<div class="container">
+<div class="container" style="margin-bottom: 60px;">
     <h1 class='section_header'>My Teams</h1>
     <a class="btn waves-effect waves-light blue" href="{% url 'home' %}">
         <i class="fas fa-chevron-left"></i> Back</a>
     <a class="btn waves-effect waves-light blue" href="{% url 'createTeam' %}">Create Team</a>
-    {% if teams %}
+    {% if teams1 %}
+    <h4 >Teams created by you</h4>
     <table class="striped highlight">
         <thead>
             <tr>
                 <th>Team Name</th>
-                <th>Created By</th>
+                <th>Created On</th>
             </tr>
         </thead>
         <tbody>
-            {% for team in teams %}
+            {% for team in teams1 %}
             <tr>
                 <td>{{ team.name }}</td>
-                <td>{{ team.creator.username }}</td>
+                <td>{{ team.createdAt }} by You</td>
+                
                 <td>
+                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/team/edit/{{team.pk}}">
+                        View/Edit Team</a>
+                </td>                <td>
                     <a class="btn waves-effect waves-light blue" href="{% url 'tasks'%}{{team.pk}}">
                         Show Tasks</a>
                 </td>
@@ -37,17 +35,41 @@
             {% endfor %}
         </tbody>
     </table>
-    {% else %}
+    {% endif %}
+    {% if teams2 %}
+        <h4>Other teams</h4>
+        <table class="striped highlight">
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Created On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in teams2 %}
+                <tr>
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.createdAt }} by {{ team.creator.username }}</td>
+                    <td>
+                        <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/team/view/{{team.pk}}">
+                            View Team</a>
+                    </td>
+                    <td>
+                        <a class="btn waves-effect waves-light blue" href="{% url 'tasks' %}{{team.pk}}">
+                            Show Tasks</a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% if not teams1 and not teams2 %}
     <div id='message_section'>
         You are not a member of any team.
     </div>
     {% endif %}
 </div>
-
-    {% if msg %}
-    <h1> {{msg}} </h5>
-    {% endif %}
-
 
 {% endblock %}
 

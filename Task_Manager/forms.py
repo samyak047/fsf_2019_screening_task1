@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-
+from . models import Task
 
 class CommentForm(forms.Form):
 	body = forms.CharField(label = 'Comment')
@@ -21,8 +21,8 @@ class RegisterForm(forms.Form):
 
 		if len(User.objects.filter(username=username)) > 0:
 			raise forms.ValidationError('Username already Exists')
-		#if len(p1) < 8:
-		#	raise forms.ValidationError('Password should be minimum 8 characters long.')
+		if len(p1) < 8:
+			raise forms.ValidationError('Password should be minimum 8 characters long.')
 		elif p1 != p2:
 			raise forms.ValidationError('Both Password fields should be same.')
 		
@@ -30,6 +30,7 @@ class RegisterForm(forms.Form):
 class CreateTeamForm(forms.Form):
 	teamName = forms.CharField(label = 'Team Name')
 	members = forms.CharField(label = 'Space separated usernames of Members')
+	description = forms.CharField(label = 'Description')
 
 	def clean(self):
 		cleaned_data = super().clean()
@@ -37,6 +38,36 @@ class CreateTeamForm(forms.Form):
 		members = members.split()
 		for member in members:
 			if len(User.objects.filter(username = member)) == 0:
-				raise forms.ValidationError('No user with username :'+member)
-		
+				raise forms.ValidationError('No user with username: '+member)
+	
+class AddMember(forms.Form):
+	member = forms.CharField(label = 'Username')
 
+	def clean(self):
+		cleaned_data = super().clean()
+		if 'member' in cleaned_data:
+			member = cleaned_data.get('member')
+			if len(User.objects.filter(username = member)) == 0:
+				raise forms.ValidationError('No user with username :'+member)
+			
+
+class EditTaskForm(forms.ModelForm):
+	class Meta:
+		model = Task
+		fields = ('title','status','description','dueDate')
+
+class CreateTaskForm(forms.Form):
+	title = forms.CharField(label = 'Title')
+	description = forms.CharField(label = 'Description')
+	status = forms.CharField(label = 'Status')
+	dueDate = forms.DateField(label='Due Date')
+	members = forms.CharField(label = 'Space separated usernames of Assignee')
+	
+
+	def clean(self):
+		cleaned_data = super().clean()
+		members = cleaned_data.get("members")
+		members = members.split()
+		for member in members:
+			if len(User.objects.filter(username = member)) == 0:
+				raise forms.ValidationError('No user with username: '+member)

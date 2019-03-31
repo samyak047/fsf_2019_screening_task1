@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+{% if team %}
+<h3 class='section_header'>Create task for {{team.name}}</h3>
+{% endif %}
+ <a class="btn waves-effect waves-light blue" href="{% url 'tasks' %}{{team.pk}}">
+        <i class="fas fa-chevron-left"></i> Back</a>
+
+<form method="post" style="width:60%;margin:auto;text-align: center;">
+{% csrf_token %}
+<table cellpadding="0">
+{{form.as_table}}
+</table>
+
+<button type="submit" class="main-btn submit" id="sub" style="margin-bottom: 60px;width:100px;padding:6px;border:1px solid black;margin-top:10px;">Create Task</button>
+
+</form>
+
+{% endblock %}

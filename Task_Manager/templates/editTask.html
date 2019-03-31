@@ -1,0 +1,80 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+
+
+<div class="container" style="margin-bottom: 60px;">
+    <a class="btn waves-effect waves-light blue" href="{% url 'tasks'%}{{team.pk}}">
+        <i class="fas fa-chevron-left"></i> Back</a>
+    
+    <h1 class='section_header'>{{team.name}}</h1>
+    <h6> Description: {{team.description}} </h6>
+    <h6> Created by {{team.creator}} on {{team.createdAt}}</h6>
+    <br>
+
+    {% if msg %}
+	<h6 class="section_header">{{msg}}</h6>
+	{% endif %}
+
+    <h4 class="section_header"> Edit Task: </h4>
+
+    <form method="post" style="width:60%;margin:auto;text-align: center;">
+    {% csrf_token %}
+
+    <table cellpadding="0">
+        {{form.as_table}}
+    </table>
+
+<button type="submit" class="main-btn submit" id="sub" style="margin-bottom: 60px;width:auto;padding:6px;border:1px solid black;margin-top:10px;">Save Changes</button>
+
+</form>
+
+    {% if assignedTo %}
+    <h4 class="section_header">Task Assinged To:</h4>
+    <table class="striped highlight">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assignee in assignedTo %}
+            <tr>
+                <td>{{ assignee.username }}</td>
+                <td>{{ assignee.firstname}} {{assignee.lastname}} </td>
+                {% if assignee != task.createdBy %}
+                <td>
+                   <form method="POST" style="width:60%;margin:auto;text-align: center;">
+                   	{% csrf_token %}
+					<input class="btn waves-effect waves-light blue" type="submit" value="Remove" name="{{assignee.username}}">
+            		</form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+
+
+<br>
+    <h4 class="section_header"> Add assignee: </h4>
+
+    <form method="post" style="width:60%;margin:auto;text-align: center;">
+    {% csrf_token %}
+
+    <table cellpadding="0">
+        {{form2.as_table}}
+    </table>
+
+<button type="submit" class="main-btn submit" id="sub" style="margin-bottom: 60px;width:auto;padding:6px;border:1px solid black;margin-top:10px;">Add assignee</button>
+
+</form>
+
+    <a class="btn waves-effect waves-light blue" href="{% url 'tasks'%}{{team.pk}}" style="text-align: : center;"> Done </a>
+</div>
+{% endblock %}

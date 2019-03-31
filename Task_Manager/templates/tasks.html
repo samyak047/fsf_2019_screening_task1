@@ -1,31 +1,111 @@
+
 {% extends "base_generic.html" %}
-{% block title %}
-<title> Tasks </title>
-{% endblock %}
-
-{% block nav %}
-<a href="{% url 'logout'%}"><i class="fa fa-fw fa-user"></i>Logout</a>
-{% endblock %}
-
+{% block title %} {{user.username}} | Teams {% endblock %}
 
 
 
 {% block content %}
+<div class="container" style="margin-bottom: 60px;">
+    <h1 class='section_header'>{{ team.name }} | Tasks</h1>
+    <a class="btn waves-effect waves-light blue" href="{% url 'teams' %}">
+        <i class="fas fa-chevron-left"></i> Back</a>
+    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/create/{{team.pk}}">Create Task</a>
 
-
-    {% if msg %}
-    <h1> {{msg}} </h5>
+    {% if not tasks1 and not tasks2 and not tasks3 %}
+    <div id='message_section'>
+        No tasks created.
+    </div>
     {% endif %}
 
+    {% if tasks1 %}
+    <h4 >Tasks created by you:</h4>
+    <table class="striped highlight">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Created On</th>
+                <th>Deadline</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks1 %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.createdAt}} by You</td>
+                <td>{{ task.dueDate }}</td>
+                <td>{{ task.status }}</td>
+                <td>
+                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}}/edit ">Edit</a>
+                </td>
+                
+                <td>
+                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}} ">View</a>
+                </td>
 
-	{% if tasks %}
-    <ul class="list">
-        {% for task in tasks %}
-
-            <li><a style="font-size:20px; padding:20px;" href="{% url 'tasks'%}{{task.team.pk}}/{{task.pk}}"> {{ task.title }} </a> </li>
-        {% endfor %}
-    
-    </ul>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% endif %}
+
+    {% if tasks2 %}
+    <h4 >Tasks assigned to you:</h4>
+    <table class="striped highlight">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Created On</th>
+                <th>Deadline</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks2 %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.createdAt}} by {{task.createdBy.username}}</td>
+                <td>{{ task.dueDate }}</td>
+                <td>{{ task.status }}</td>
+                <td>
+                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}} ">View</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if tasks3 %}
+    <h4 >Other Tasks:</h4>
+    <table class="striped highlight">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Created On</th>
+                <th>Deadline</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks3 %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.createdAt}} by {{task.createdBy.username}}</td>
+                <td>{{ task.dueDate }}</td>
+                <td>{{ task.status }}</td>
+                <td>
+                    <a class="btn waves-effect waves-light blue" href="http://127.0.0.1:8000/tasks/{{team.pk}}/{{task.pk}} ">View</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
 {% endblock %}
+
 

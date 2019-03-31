@@ -1,46 +1,55 @@
+
 {% extends "base_generic.html" %}
-{% block title %}
-<title> Tasks </title>
-{% endblock %}
 
-{% block nav %}
-<a href="{% url 'logout'%}"><i class="fa fa-fw fa-user"></i>Logout</a>
-{% endblock %}
-
-
-
+{% block title %}Team Details{% endblock %}
 
 {% block content %}
 
 
-    {% if msg %}
-    <h5> {{msg}} </h5>
-    {% endif %}
+<div class="container" style="margin-bottom: 60px;">
+        <a class="btn waves-effect waves-light blue" href="{% url 'tasks' %}{{team.pk}}">
+        <i class="fas fa-chevron-left"></i> Back</a>
 
-
-	{% if task %}
-        <h2>{{task.title}}</h2>
-        <h2>{{task.status}}</h2>
-        <p>{{task.description}}</p>
-    {% endif %}
-    {% if comments %}
-    <ul>
-        {% for comment in comments %}
-        <li> {{comment.body}}   {{comment.author.username}}</li>
-        {% endfor %}
-    </ul>
-
-    {% endif %}
-
-    {% if form %}
-    <div >
-    <form method="POST" id="reg_form">
-        {% csrf_token %}
-        {{form}}
-    <button type="submit" class="main-btn submit" id="sub">Comment</button>
-    </form>
-    </div>
-    {% endif %}
+    <h3 class='section_header'>{{task.name}}</h3>
+    <h5>Task Created by {{task.createdBy}} on {{task.createdAt}}</h5>
+    <h5>Description: {{task.description}}</h5>
+    <h5>Status: {{task.status}} </h5>
+    <h5>Deadline: {{task.dueDate}} </h5>
     
-{% endblock %}
 
+    {% if comments %}
+    <h4 class="section_header">Comments:</h4>
+    <table class="striped highlight">
+
+        <tbody>
+
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.body }}</td>
+                <td>Commented on {{ comment.createdAt}} by {{ comment.author.username}}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% if form %}
+    <h4 class="section_header"> Comment: </h4>
+
+    <form method="post" style="width:60%;margin:auto;text-align: center;">
+    {% csrf_token %}
+
+    <table cellpadding="0">
+        {{form.as_table}}
+    </table>
+
+    <button type="submit" class="main-btn submit" id="sub" style="margin-bottom: 60px;width:auto;padding:6px;border:1px solid black;margin-top:10px;">Comment</button>
+
+    </form>
+
+
+    {% endif %}
+
+
+</div>
+{% endblock %}
