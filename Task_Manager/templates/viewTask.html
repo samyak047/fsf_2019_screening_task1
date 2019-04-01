@@ -15,6 +15,7 @@
     <h5>Description: {{task.description}}</h5>
     <h5>Status: {{task.status}} </h5>
     <h5>Deadline: {{task.dueDate}} </h5>
+    <h5>Assigned to: {% for assignee in assignedTo %} {{assignee.username}}, {% endfor %}</h5>
     
 
     {% if comments %}

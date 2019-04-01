@@ -21,19 +21,40 @@ Task Manager application implemented using Django.
 4. Install the dependencies for the project.
     ```
     cd fsf_2019_screening_task1
-    pip3 install -r requirements.txt
+    pip install -r requirements.txt
     ```
 5. Migrate your database.
     ```
-    python3 manage.py makemigrations
-    python3 manage.py migrate 
+    python manage.py makemigrations
+    python manage.py migrate 
     ``` 
 
 6. Run the live development server on your machine and test it.
     ```
-    python3 manage.py runserver
+    python manage.py runserver
     ```
  
     Once the server is started, open http://127.0.0.1:8000 or whatever server you are running on in a web browser.
     Everything went well if the webpage loads correctly and you don't see any errors.
-   
+
+7. Test the app.
+    ```
+    python manage.py test
+    ```
+####Accounts
+
+Some Pre-registered accounts to view and test the live development server on your machine:
+
+#### user
+
+| **Username**   | **Password** |
+| -------------- | ------------ |
+| samyak047      | samyak047    |
+| apurva         | apurvamishra |
+| aks.modi     	 | aks.modi     |
+
+Superuser:
+	username: admin
+	password: adminpassword
+ 
+

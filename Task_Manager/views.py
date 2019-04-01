@@ -141,6 +141,7 @@ def taskDescription(request, teamId, taskId):
 	args['user'] = user
 	args['team'] = team
 	args['comments'] = comments
+	args['assignedTo'] = task.assignedTo.all()
 
 	return render(request, 'viewTask.html', args)
 

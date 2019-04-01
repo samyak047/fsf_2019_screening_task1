@@ -44,12 +44,17 @@
         {% if request.user.is_authenticated %}
         <ul class="right hide-on-med-and-down">
             <li>
+                Logged in as {{request.user.username}}
+            </li>
+            <li>
                 <a href="{% url 'teams' %}">My Teams</a>
             </li>
 
             <li>
                 <a href="{% url 'login' %}">Logout</a>
             </li>
+
+
         </ul>
         <ul id="nav-mobile" class="sidenav">
             <li>

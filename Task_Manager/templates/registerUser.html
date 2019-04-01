@@ -5,8 +5,8 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
-
-
+<div class="container" style="margin-bottom: 60px;">
+<h3 class='section_header'> Register </h3>
 <form method="post" style="width:40%;margin:auto;text-align: center;">
 {% csrf_token %}
 <table cellpadding="0">
@@ -16,5 +16,6 @@
 <button type="submit" class="main-btn submit" id="sub" style="margin-bottom: 60px; width:100px;padding:6px;border:1px solid black;margin-top:10px;">Register</button>
 
 </form>
+</div>
 
 {% endblock %}
