@@ -41,11 +41,9 @@ Task Manager application implemented using Django.
     ```
     python manage.py test
     ```
-####Accounts
+#### Accounts
 
 Some Pre-registered accounts to view and test the live development server on your machine:
-
-#### user
 
 | **Username**   | **Password** |
 | -------------- | ------------ |
@@ -54,7 +52,9 @@ Some Pre-registered accounts to view and test the live development server on you
 | aks.modi     	 | aks.modi     |
 
 Superuser:
+
 	username: admin
+	
 	password: adminpassword
  
 
